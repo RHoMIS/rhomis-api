@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 
 var processedDataSchema = new Schema({
     projectID: String,
-    data: {}
-});
+    data: Object
+},
+    { collection: 'processedData' });
 
-
-var processedData = mongoose.model('processedData', processedDataSchema);
+module.exports = mongoose.model('processedData', processedDataSchema);
