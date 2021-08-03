@@ -7,10 +7,11 @@ router.options("*", cors());
 
 const processedData = require("../models/processedData");
 const indicatorData = require("../models/indicatorData");
+const metaData = require("../models/metaData");
 
 router.post("/", async (req, res) => {
     try {
-
+        console.log(req.body)
         if (req.body.dataType !== undefined &
             req.body.projectID !== undefined &
             req.body.formID !== undefined) {
@@ -40,8 +41,17 @@ router.post("/", async (req, res) => {
                 res.send(result[0].data)
             }
 
-            console.log("Data type included")
+            if (req.body.dataType === "metaData") {
+                const result = await metaData.find({
+                    projectID: req.body.projectID,
+                    formID: req.body.formID
+                })
 
+                if (result.length > 1) {
+                    throw "More than one project with form and project ID. Duplicate projects in DB"
+                }
+                res.send(result[0].data)
+            }
         } else {
             throw 'Need to specify the data to request, the projectID, and the formID in request body. E.g. {"dataType":"processedData", "projectID":"xyz", "formID":"abc"}.';
         }
