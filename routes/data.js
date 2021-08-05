@@ -9,9 +9,12 @@ const processedData = require("../models/processedData");
 const indicatorData = require("../models/indicatorData");
 const metaData = require("../models/metaData");
 
+const cropData = require("../models/cropData");
+const livestockData = require("../models/livestockData");
+
+
 router.post("/", async (req, res) => {
     try {
-        console.log(req.body)
         if (req.body.dataType !== undefined &
             req.body.projectID !== undefined &
             req.body.formID !== undefined) {
@@ -43,6 +46,30 @@ router.post("/", async (req, res) => {
 
             if (req.body.dataType === "metaData") {
                 const result = await metaData.find({
+                    projectID: req.body.projectID,
+                    formID: req.body.formID
+                })
+
+                if (result.length > 1) {
+                    throw "More than one project with form and project ID. Duplicate projects in DB"
+                }
+                res.send(result[0].data)
+            }
+
+            if (req.body.dataType === "cropData") {
+                const result = await cropData.find({
+                    projectID: req.body.projectID,
+                    formID: req.body.formID
+                })
+
+                if (result.length > 1) {
+                    throw "More than one project with form and project ID. Duplicate projects in DB"
+                }
+                res.send(result[0].data)
+            }
+
+            if (req.body.dataType === "livestockData") {
+                const result = await livestockData.find({
                     projectID: req.body.projectID,
                     formID: req.body.formID
                 })
