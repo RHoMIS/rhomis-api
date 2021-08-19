@@ -12,17 +12,22 @@ const app = express()
 const port = process.env.PORT;
 
 
+// Configuration files 
+let config = require('config'); //we load the db location from the JSON files
+const dbHost = config.get('dbConfig.host')
+const port = config.get('dbConfig.port')
+dotenv.config()
+
 // Connecting to DB
 const mongoose = require('mongoose')
-const mongoURL = process.env.MONGO_URL;
-mongoose.connect(mongoURL, {
+mongoose.connect(dbHost, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
 const db = mongoose.connection;
 db.once("open", (_) => {
-    console.log("Database connected:", mongoURL);
+    console.log("Database connected:", dbHost);
 });
 
 db.on("error", (err) => {

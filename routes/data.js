@@ -5,6 +5,8 @@ const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
 
+const auth = require('./verifyToken')
+
 const processedData = require("../models/processedData");
 const indicatorData = require("../models/indicatorData");
 const metaData = require("../models/metaData");
@@ -13,7 +15,7 @@ const cropData = require("../models/cropData");
 const livestockData = require("../models/livestockData");
 
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     try {
         if (req.body.dataType !== undefined &
             req.body.projectID !== undefined &
