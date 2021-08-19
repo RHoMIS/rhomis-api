@@ -9,7 +9,7 @@ if (result.error) {
 // Setting up server
 const express = require('express')
 const app = express()
-const port = process.env.PORT;
+//const port = process.env.PORT;
 
 
 // Configuration files 
