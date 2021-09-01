@@ -2,5 +2,8 @@
     "dbConfig": {
         "host": "mongodb://127.0.0.1:27017/rhomis-data-dev",
         "port": 3001
+    },
+    "rConfig": {
+        "rscript_path": "~/projects/rhomis-2/rhomis-server-R-scripts/R/process_data.R"
     }
 }

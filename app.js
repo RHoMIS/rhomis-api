@@ -43,10 +43,11 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 const dataRoute = require("./routes/data")
 const metaDataRoute = require("./routes/metaData")
-
+const processDataRoute = require("./routes/processData")
 
 app.use("/api/data/", dataRoute)
 app.use("/api/meta-data", metaDataRoute)
+app.use("/api/process-data", processDataRoute)
 
 
 // Defining a get request for the home page
