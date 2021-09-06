@@ -4,10 +4,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var metaDataSchema = new Schema({
-    projectID: String,
-    formID: String,
-    data: Object
-
+    projects: Object,
+    forms: Object
 },
     { collection: 'metaData' });
 
