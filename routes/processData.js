@@ -10,8 +10,9 @@ router.options("*", cors());
 
 
 let config = require('config'); //we load the db location from the JSON files
+const dbName = config.get('dbConfig.name')
 //const rscriptPath = config.get('rConfig.rscript_path')
-const rscriptPath = process.env.RSCRIPTPATH;
+const rscriptPath = process.env.RSCRIPTPROCESSDATA;
 
 router.post("/", auth, async (req, res) => {
     try {
@@ -26,19 +27,20 @@ router.post("/", auth, async (req, res) => {
             return
         }
 
+        const exec_string = 'Rscript ' + rscriptPath + ' --projectName "' + req.body.projectName + '" --formName "' + req.body.formName + '"' + ' --dataBase "' + dbName + '"'
 
-        const exec_string = 'Rscript ' + rscriptPath + ' --projectName ' + req.body.projectName + ' --formName ' + req.body.formName
         await exec(exec_string, (error, stdout, stderr) => {
-            if (error) {
-                res.send(`error: ${error.message}`)
-                return
-            }
-
             if (stderr) {
                 res.send(`stderr: ${stderr}`)
                 console.log(stderr)
                 return
             }
+            if (error) {
+                res.send(`error: ${error.message}`)
+                return
+            }
+
+
             res.send(`stdout: ${stdout}`)
 
         })
