@@ -10,7 +10,7 @@ const auth = require('./verifyToken')
 const processedData = require("../models/processedData");
 const indicatorData = require("../models/indicatorData");
 const metaData = require("../models/metaData");
-
+const moduleData = require("../models/moduleData")
 const cropData = require("../models/cropData");
 const livestockData = require("../models/livestockData");
 
@@ -47,11 +47,12 @@ router.post("/", auth, async (req, res) => {
             }
 
             if (req.body.dataType === "metaData") {
-                const result = await metaData.find({
+                const result = await moduleData.find({
                     projectID: req.body.projectID,
                     formID: req.body.formID
                 })
 
+                console.log(result)
                 if (result.length > 1) {
                     throw "More than one project with form and project ID. Duplicate projects in DB"
                 }
