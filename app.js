@@ -1,10 +1,7 @@
 
 // Getting environment variables
 const dotenv = require("dotenv");
-const result = dotenv.config();
-if (result.error) {
-    throw result.error;
-}
+
 
 // Setting up server
 const express = require('express')
@@ -17,6 +14,8 @@ let config = require('config'); //we load the db location from the JSON files
 const dbHost = config.get('dbConfig.host')
 const port = config.get('dbConfig.port')
 dotenv.config()
+//console.log("Rscript path:" + process.env.RSCRIPTPROCESSDATA)
+
 
 // Connecting to DB
 const mongoose = require('mongoose')
