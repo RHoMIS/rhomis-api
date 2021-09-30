@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const auth = require('./verifyToken')
+const auth = require('../validation/verifyToken')
 const { exec } = require("child_process")
 
 

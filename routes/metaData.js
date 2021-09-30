@@ -5,7 +5,7 @@ const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
 
-const auth = require('./verifyToken')
+const auth = require('../validation/verifyToken')
 
 const metaData = require("../models/metaData")
 
