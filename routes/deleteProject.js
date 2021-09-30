@@ -30,7 +30,6 @@ router.delete("/", auth, async (req, res) => {
         const deletedProcessedData = await processedData.deleteMany({ projectID: req.body.projectName })
         const deletedProjectInformation = await projectInformation.deleteMany({ projectID: req.body.projectName })
 
-        console.log(deletedCropData)
 
         res.send("Project Deleted")
         return
