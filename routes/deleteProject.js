@@ -7,11 +7,7 @@ const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
 
-const cropData = require('../models/cropData')
-const indicatorData = require('../models/indicatorData')
-const livestockData = require('../models/livestockData')
-const metaData = require('../models/metaData')
-const processedData = require('../models/processedData')
+const data = require('../models/data')
 
 
 router.delete("/", auth, async (req, res) => {
@@ -23,13 +19,7 @@ router.delete("/", auth, async (req, res) => {
             return
         }
 
-        const deletedCropData = await cropData.deleteMany({ projectID: req.body.projectName })
-        const deletedIndicatorData = await indicatorData.deleteMany({ projectID: req.body.projectName })
-        const deletedLivestockData = await livestockData.deleteMany({ projectID: req.body.projectName })
-        const deletedMetaData = await metaData.deleteMany({ projectID: req.body.projectName })
-        const deletedProcessedData = await processedData.deleteMany({ projectID: req.body.projectName })
-        const deletedProjectInformation = await projectInformation.deleteMany({ projectID: req.body.projectName })
-
+        const deletedData = await data.deleteMany({ projectID: req.body.projectName })
 
         res.send("Project Deleted")
         return

@@ -27,8 +27,8 @@ router.post("/", auth, async (req, res) => {
             return
         }
 
-        const exec_string = 'Rscript ' + rscriptPath + ' --projectName "' + req.body.projectName + '" --formName "' + req.body.formName + '"' + ' --dataBase "' + dbName + '"'
-
+        const exec_string = 'Rscript ' + rscriptPath + ' --projectName "' + req.body.projectName + '" --formName "' + req.body.formName + '"' + '" --formVersion "' + req.body.formVersion + '"' + ' --dataBase "' + dbName + '"'
+        console.log(exec_string)
         await exec(exec_string, (error, stdout, stderr) => {
             if (stderr) {
                 res.send(`stderr: ${stderr}`)

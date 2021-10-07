@@ -15,7 +15,7 @@ const rscriptPath = process.env.RSCRIPTGENERATEDATA;
 
 router.post("/", auth, async (req, res) => {
     try {
-        console.log(rscriptPath)
+        // console.log(rscriptPath)
         if (!req.body.projectName) {
             res.send("Please send a project name for the data you would like to generate")
             return
@@ -33,6 +33,7 @@ router.post("/", auth, async (req, res) => {
 
 
         const exec_string = 'Rscript ' + rscriptPath + ' --projectName "' + req.body.projectName + '" --formName "' + req.body.formName + '" --numberOfResponses "' + req.body.numberOfResponses + '"'
+        console.log(exec_string)
         await exec(exec_string, (error, stdout, stderr) => {
             if (error) {
                 res.send(`error: ${error.message}`)

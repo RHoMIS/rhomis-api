@@ -7,13 +7,13 @@ router.options("*", cors());
 
 const auth = require('../validation/verifyToken')
 
-const metaData = require("../models/metaData")
+const projectData = require("../models/projectData")
 
 
 router.get("/", auth, async (req, res) => {
     try {
 
-        const result = await metaData.find({})
+        const result = await projectData.find({ projectID: req.body.projectID, formID: req.body.formID })
 
         res.send(result)
 
