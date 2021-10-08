@@ -8,7 +8,8 @@ router.use(cors());
 router.options("*", cors());
 
 const data = require('../models/data')
-
+const Project = require('../models/projects')
+const Form = require('../models/forms')
 
 router.delete("/", auth, async (req, res) => {
     try {
@@ -21,6 +22,8 @@ router.delete("/", auth, async (req, res) => {
 
         const deletedData = await data.deleteMany({ projectID: req.body.projectName })
 
+        const deleteProject = await Project.deleteMany({ name: req.body.projectName })
+        const deleteForm = await Form.deleteMany({ project: req.body.projectName })
         res.send("Project Deleted")
         return
     } catch (err) {
