@@ -9,7 +9,7 @@ const app = express()
 //const port = process.env.PORT;
 
 
-// Configuration files 
+// Configuration files s
 let config = require('config'); //we load the db location from the JSON files
 const dbHost = config.get('dbConfig.host')
 const port = config.get('dbConfig.port')
