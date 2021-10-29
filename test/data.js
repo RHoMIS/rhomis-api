@@ -13,12 +13,7 @@ let should = chai.should()
 var assert = require('assert');
 
 // Loading app information
-let index = require('../app')
-let cropData = require('../models/cropData')
-let indicatorData = require('../models/indicatorData')
-let livestockData = require('../models/livestockData')
-let processedData = require('../models/processedData')
-let moduleData = require('../models/moduleData')
+
 
 chai.use(chaiHttp)
 
