@@ -15,6 +15,9 @@ let config = require('config'); //we load the db location from the JSON files
 const dbName = config.get('dbConfig.name')
 //const rscriptPath = config.get('rConfig.rscript_path')
 const rscriptPath = process.env.RSCRIPTPROCESSDATA;
+const central_url = process.env.CENTRALURL;
+const central_email = process.env.CENTRALEMAIL;
+const central_password = process.env.CENTRALPASSW0RD;
 
 router.post("/", auth, async (req, res) => {
     try {
@@ -36,10 +39,48 @@ router.post("/", auth, async (req, res) => {
             name: req.body.formName,
             project: req.body.projectName
         })
-
         if (!form) return res.status(400).send("Could not find the form you were looking for")
+        console.log(req.body.draft)
+        let status = undefined
+        if (req.body.draft === true) {
+            status = "draft"
+        }
 
-        const exec_string = 'Rscript ' + rscriptPath + ' --projectName "' + req.body.projectName + '" --formName "' + req.body.formName + '" --formVersion "' + form.formVersion + '"' + ' --dataBase "' + dbName + '"'
+        if (req.body.draft === false) {
+            status = "finalized"
+        }
+
+
+        let exec_string = 'Rscript ' +
+            rscriptPath +
+            ' --commandType "' +
+            req.body.commandType +
+            '" --projectName "' +
+            req.body.projectName +
+            '" --formName "' +
+            req.body.formName +
+            '" --formVersion "' +
+            req.body.formVersion +
+            '"' +
+            ' --dataBase "' +
+            dbName +
+            '" --status "' +
+            status +
+            '" ' +
+            '--centralURL "' +
+            central_url +
+            '" ' +
+            '--centralEmail "' +
+            central_email +
+            '" ' +
+            '--centralPassword "' +
+            central_password +
+            '" '
+
+        if (req.body.commandType === "generate") {
+            exec_string = exec_string + '--numberOfResponses "' + 5 + '"'
+        }
+
         console.log(exec_string)
         await exec(exec_string, (error, stdout, stderr) => {
             if (stderr) {
@@ -52,6 +93,8 @@ router.post("/", auth, async (req, res) => {
                 return
             }
 
+            console.log("finished")
+            console.log(stdout)
 
             res.send(`stdout: ${stdout}`)
 

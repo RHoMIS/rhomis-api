@@ -49,13 +49,24 @@ router.post("/project", auth, async (req, res) => {
 
 router.post("/form", auth, async (req, res) => {
     try {
-        const savedForm = await new Form(req.body).save()
 
-        const updated_project = await Project.updateOne(
-            { name: req.body.project },
-            { $push: { forms: req.body.name } });
+        const oldForm = await Form.findOne({ name: req.body.name })
 
-        return res.status(200).send(savedForm)
+        if (oldForm) {
+            const updated_project = await Form.updateOne(
+                { name: req.body.name },
+                { formVersion: req.body.formVersion });
+
+        }
+
+        if (!oldForm) {
+            const savedForm = await new Form(req.body).save()
+
+            const updated_project = await Project.updateOne(
+                { name: req.body.project },
+                { $push: { forms: req.body.name } });
+        }
+        return res.status(200).send("Form saved")
     } catch (err) {
         return res.status(400).send(err)
     }

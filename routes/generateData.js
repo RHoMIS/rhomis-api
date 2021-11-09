@@ -43,7 +43,7 @@ router.post("/", auth, async (req, res) => {
         if (!form) return res.status(400).send("Could not find the form you were looking for")
 
 
-        const exec_string = 'Rscript ' + rscriptPath + ' --projectName "' + req.body.projectName + '" --formName "' + req.body.formName + '" --formVersion "' + form.formVersion + '" --numberOfResponses "' + req.body.numberOfResponses + '"'
+        const exec_string = 'Rscript ' + rscriptPath + '--comandType "' + req.body.commandType + '" --projectName "' + req.body.projectName + '" --formName "' + req.body.formName + '" --formVersion "' + req.body.formVersion + '" --numberOfResponses "' + req.body.numberOfResponses + '" --status "' + req.body.status + '"'
         console.log(exec_string)
         await exec(exec_string, (error, stdout, stderr) => {
             if (error) {
