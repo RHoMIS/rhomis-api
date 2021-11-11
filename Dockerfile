@@ -12,7 +12,7 @@ COPY . .
 
 EXPOSE 3001
 
-CMD npm run start-prod
+CMD ./node_modules/.bin/cross-env NODE_ENV=prod ./node_modules/.bin/pm2 start ./app.js
 
 
 
