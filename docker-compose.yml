@@ -1,0 +1,18 @@
+version: "2"
+services:
+       rhomis-api:
+           container_name: rhomis-api
+           image: lgorman/rhomis-api
+           restart: always
+           build: .
+           ports:
+             - "3001:3001"
+           links:
+             - mongo
+       mongo:
+             container_name: mongo
+             image: mongo
+             volumes:
+               - ./data:/data/db
+             ports:
+               - '27018:27017'
