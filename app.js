@@ -19,10 +19,20 @@ dotenv.config()
 
 // Connecting to DB
 const mongoose = require('mongoose')
-mongoose.connect(dbHost, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+
+var connectWithRetry = function () {
+
+    return mongoose.connect(dbHost, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }, function (err) {
+        if (err) {
+            console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
+            setTimeout(connectWithRetry, 5000);
+        }
+    });
+
+}
 
 const db = mongoose.connection;
 db.once("open", (_) => {

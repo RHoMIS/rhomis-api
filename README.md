@@ -4,3 +4,5 @@ An API for querying the RHoMIS data-base. In early development stages. More docu
 
 
 Following [this tutorial](https://medium.com/@kavinduchamiran/full-mern-stack-app-0-to-deployment-on-kubernetes-part-3-68e9af980b4c) for deployment to kubernetes
+
+Following [this tutorial](https://blog.codecentric.de/en/2021/03/github-container-registry/) to deply the container to the container registry
