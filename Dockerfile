@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.source="https://github.com/lgorman/rhomis-api"
 WORKDIR /usr/src/rhomis-api
 
 # Install packages
-COPY package.json ./
+COPY package*.json ./
 RUN npm install
 
 # Copy the app source code

@@ -1,18 +1,33 @@
-version: "2"
+version: "3"
 services:
-       rhomis-api:
-           container_name: rhomis-api
-           image: lgorman/rhomis-api
-           restart: always
-           build: .
-           ports:
-             - "3001:3001"
-           links:
-             - mongo
-       mongo:
-             container_name: mongo
-             image: mongo
-             volumes:
-               - ./data:/data/db
-             ports:
-               - '27018:27017'
+      rhomis-api:
+          container_name: rhomis-api
+          image: lgorman/rhomis-api
+          restart: always
+          build: .
+          ports:
+            - "3001:3001"
+          networks:
+            - app-network
+          env_file:
+            - .env
+          environment:
+            - DOCKER_MESSAGE="hello from docker"
+            - NODE_ENV="production"
+          
+      mongo:
+            container_name: rhomis-data-db
+            image: mongo
+            volumes:
+              - mongodb:/data/db
+            ports:
+              - '27017:27017'
+            networks:
+            - app-network
+
+networks:
+  app-network:
+
+volumes:
+  mongodb:
+            
