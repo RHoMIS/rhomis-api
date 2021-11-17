@@ -2,7 +2,7 @@ version: "3"
 services:
   rhomis-api:
     container_name: rhomis-api
-    image: lgorman/rhomis-api
+    image: l-gorman/rhomis-api
     restart: always
     build: .
     ports:
