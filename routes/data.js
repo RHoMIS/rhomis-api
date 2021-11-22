@@ -39,10 +39,12 @@ router.post("/", auth, async (req, res) => {
                     dataType: req.body.dataType
                 })
                 console.log(result)
-                return res.send(result[0].data)
                 if (result.length > 1) {
                     throw "More than one project with form and project ID. Duplicate projects in DB"
                 }
+
+                return res.send(result[0].data)
+
             }
 
             throw "Unauthorized";
