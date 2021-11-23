@@ -13,9 +13,6 @@ const data = require("../models/data");
 router.post("/", auth, async (req, res) => {
     try {
 
-
-
-
         console.log(req.body.dataType)
         if (req.body.dataType !== undefined &
             req.body.projectID !== undefined &
@@ -56,5 +53,12 @@ router.post("/", auth, async (req, res) => {
         res.json({ message: err });
     }
 });
+
+
+
+router.post("/update-units", auth, async (req, res) => {
+
+
+})
 
 module.exports = router;
