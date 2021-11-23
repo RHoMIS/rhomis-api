@@ -59,15 +59,15 @@ app.use(express.urlencoded({ limit: '200mb', extended: true }));
 const dataRoute = require("./routes/data")
 const metaDataRoute = require("./routes/metaData")
 const processDataRoute = require("./routes/processData")
-const generateDataRoute = require("./routes/generateData")
 const deleteProjectRoute = require("./routes/deleteProject")
+const projectDataRoute = require("./routes/projectData")
+
 
 app.use("/api/data/", dataRoute)
 app.use("/api/meta-data", metaDataRoute)
 app.use("/api/process-data", processDataRoute)
-app.use("/api/generate-data", generateDataRoute)
 app.use("/api/delete-project", deleteProjectRoute)
-
+app.use("/api/project-data", projectDataRoute)
 
 // Defining a get request for the home page
 app.get('/', (req, res) => {

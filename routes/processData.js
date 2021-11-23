@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const auth = require('../validation/verifyToken')
+const auth = require('../validation/checkAccess')
 const { exec } = require("child_process")
 
 
@@ -21,7 +21,9 @@ const central_password = process.env.CENTRALPASSW0RD;
 
 router.post("/", auth, async (req, res) => {
     try {
-        console.log(rscriptPath)
+
+        console.log("Reached the processing endpoint")
+
         if (!req.body.projectName) {
             res.send("Please send a project name for the data you would like to process")
             return
@@ -33,14 +35,29 @@ router.post("/", auth, async (req, res) => {
         }
 
 
-        // Check form exists
 
-        const form = await Form.findOne({
-            name: req.body.formName,
-            project: req.body.projectName
-        })
-        if (!form) return res.status(400).send("Could not find the form you were looking for")
-        console.log(req.body.draft)
+
+
+
+        // Check User has access
+
+        const projectManagerIDs = req.user.information.user.roles.projectManager
+        if (projectManagerIDs.includes(req.body.projectName) === false) {
+            return res.status(400).send("Unauthorized")
+        }
+
+
+        console.log("Checking form exists")
+
+        console.log(req.body)
+        // const form = await Form.findOne({
+        //     name: req.body.formName,
+        //     project: req.body.projectName
+        // })
+
+        // if (!form) return res.status(400).send("Could not find the form you were looking for")
+        // 
+        console.log(" Checking whether it is a draft")
         let status = undefined
         if (req.body.draft === true) {
             status = "draft"

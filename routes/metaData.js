@@ -5,7 +5,7 @@ const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
 
-const auth = require('../validation/verifyToken')
+const auth = require('../validation/checkAccess')
 
 const metaData = require("../models/metaData")
 const Form = require("../models/forms")
