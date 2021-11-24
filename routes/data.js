@@ -8,12 +8,12 @@ router.options("*", cors());
 const auth = require('../validation/checkAccess')
 
 const data = require("../models/data");
-
+const units_and_conversions = require("../models/unitsAndConversions")
 
 router.post("/", auth, async (req, res) => {
     try {
 
-        console.log(req.body.dataType)
+        console.log(req.body)
         if (req.body.dataType !== undefined &
             req.body.projectID !== undefined &
             req.body.formID !== undefined) {
@@ -28,13 +28,37 @@ router.post("/", auth, async (req, res) => {
             const projectManagerIDs = req.user.information.user.roles.projectManager
             const dataAnalystIDs = req.user.information.user.roles.analyst
             console.log(projectManagerIDs)
+            console.log(dataAnalystIDs)
+
             if (projectManagerIDs.includes(req.body.projectID) ||
                 dataAnalystIDs.includes(req.body.formID)) {
-                const result = await data.find({
-                    projectID: req.body.projectID,
-                    formID: req.body.formID,
-                    dataType: req.body.dataType
-                })
+                console.log("Getting data")
+
+                let result = []
+
+                console.log(req.body.unit)
+                if (req.body.unit === true) {
+
+
+                    result = await units_and_conversions.find({
+                        projectID: req.body.projectID,
+                        formID: req.body.formID,
+                        conversionType: req.body.dataType
+                    })
+                    console.log("")
+
+                }
+
+                if (req.body.data === true) {
+
+                    result = await data.find({
+                        projectID: req.body.projectID,
+                        formID: req.body.formID,
+                        dataType: req.body.dataType
+                    })
+                }
+
+
                 console.log(result)
                 if (result.length > 1) {
                     throw "More than one project with form and project ID. Duplicate projects in DB"
