@@ -5,6 +5,9 @@ const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
 
+
+
+
 const auth = require('../validation/checkAccess')
 
 const data = require("../models/data");
