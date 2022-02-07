@@ -12,4 +12,4 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: ansible-playbook -v rhomis-ansible/setup.yml -i rhomis-ansible/inventory.yml --limit api.l-gorman.com --tags update_staging_api
+          script: ansible-playbook -v rhomis-ansible/setup.yml -i rhomis-ansible/inventory.yml --limit api.l-gorman.com --tags update_staging_api update_staging_api_server
