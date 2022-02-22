@@ -16,10 +16,6 @@ const port = config.get('dbConfig.port')
 dotenv.config()
 //console.log("Rscript path:" + process.env.RSCRIPTPROCESSDATA)
 
-if (process.env.NODE_ENV === "production") {
-    console.log(process.env.DOCKER_MESSAGE)
-
-}
 
 
 // Connecting to DB
