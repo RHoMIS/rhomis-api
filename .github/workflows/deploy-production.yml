@@ -15,4 +15,4 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: ansible-playbook -v rhomis-ansible/setup.yml -i rhomis-ansible/inventory.yml --limit api.rhomis.cgiar.org --tags update_prod_api_server --tags update_prod_api
+          script: ansible-playbook -v rhomis-ansible/setup.yml -i rhomis-ansible/inventory.yml --limit api.rhomis.cgiar.org --tags update_prod_api
