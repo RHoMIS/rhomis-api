@@ -21,8 +21,6 @@ router.post("/", auth, async (req, res) => {
             req.body.projectID !== undefined &
             req.body.formID !== undefined) {
 
-
-
             // Check that the project ID and formID are accessible to this user
             // and check that this user has the correct permissions to access the data
             // i.e data collector or project manager
