@@ -1,8 +1,11 @@
 name: remote ssh command
-on: [push]
+on:
+  push:
+    branches:
+      - staging
 jobs:
   build:
-    name: Update scripts
+    name: Update scripts on staging server
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands using password
@@ -12,4 +15,4 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: ansible-playbook -v rhomis-ansible/setup.yml -i rhomis-ansible/inventory.yml --limit api.l-gorman.com --tags update_staging_api_server --tags update_staging_api
+          script: ansible-playbook -v rhomis-ansible/setup.yml -i rhomis-ansible/inventory.yml --limit api.l-gorman.com --tags update_staging_api
