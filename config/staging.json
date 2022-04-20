@@ -3,5 +3,6 @@
         "name": "rhomis-data",
         "host": "mongodb://127.0.0.1:27017/rhomis-data",
         "port": 3001
-    }
+    },
+    "authURL": "https://auth.l-gorman.com"
 }

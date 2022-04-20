@@ -18,7 +18,7 @@ const dbName = config.get('dbConfig.name')
 const rscriptPath = process.env.RSCRIPTPROCESSDATA;
 const central_url = process.env.CENTRALURL;
 const central_email = process.env.CENTRALEMAIL;
-const central_password = process.env.CENTRALPASSW0RD;
+const central_password = process.env.CENTRALPASSWORD;
 
 router.post("/", auth, async (req, res) => {
     try {
@@ -34,10 +34,6 @@ router.post("/", auth, async (req, res) => {
             res.send("Please send a form name for the data you would like to process")
             return
         }
-
-
-
-
 
 
         // Check User has access

@@ -11,6 +11,14 @@ const projectData = require('../models/projectData')
 
 const data = require("../models/data");
 
+let config = require('config'); //we load the db location from the JSON files
+const authURL = config.get('authURL')
+
+const axios = require('axios')
+
+const getSubmissionCounts = require("./centralAuth")
+
+
 
 router.post("/", auth, async (req, res) => {
 
@@ -18,13 +26,10 @@ router.post("/", auth, async (req, res) => {
     // res.send(req.user.information)
 
 
-    console.log(req.body.projectName)
 
-    console.log(req.body.formName)
 
     if (!req.body.projectName) {
         return res.status(400).send("Need to send a project name in request")
-
     }
     if (!req.body.formName) {
         return res.status(400).send("Need to send a form name in request")
@@ -38,17 +43,24 @@ router.post("/", auth, async (req, res) => {
 
     try {
 
-        const projectInfo = await projectData.findOne({ "formID": req.body.formName, "projectID": req.body.projectName })
+        var projectInfo = await projectData.findOne({ "formID": req.body.formName, "projectID": req.body.projectName })
         console.log("projectInfo")
-        console.log(projectInfo)
 
-        if (!projectInfo) return res.status(400).send("No project with those details found")
-        return res.status(200).send(projectInfo)
+        var submission_counts = await getSubmissionCounts({
+            "projectName": req.body.projectName,
+            "formName": req.body.formName
+        })
+
+
+        var response = JSON.parse(JSON.stringify(projectInfo))
+        response.submissions = submission_counts;
+        console.log(response)
+
+        if (!response) return res.status(400).send("No project with those details found")
+        return res.status(200).send(response)
 
     } catch (err) {
         return res.status(400).send(err)
-
-
     }
 })
 
