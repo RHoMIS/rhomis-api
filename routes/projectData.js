@@ -46,14 +46,14 @@ router.post("/", auth, async (req, res) => {
         var projectInfo = await projectData.findOne({ "formID": req.body.formName, "projectID": req.body.projectName })
         console.log("projectInfo")
 
-        var submission_counts = await getSubmissionCounts({
-            "projectName": req.body.projectName,
-            "formName": req.body.formName
-        })
+        // var submission_counts = await getSubmissionCounts({
+        //     "projectName": req.body.projectName,
+        //     "formName": req.body.formName
+        // })
 
 
         var response = JSON.parse(JSON.stringify(projectInfo))
-        response.submissions = submission_counts;
+        // response.submissions = submission_counts;
         console.log(response)
 
         if (!response) return res.status(400).send("No project with those details found")

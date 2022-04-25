@@ -132,18 +132,19 @@ async function auth(req, res, next) {
     // Checking if a request has a token
     const token = req.header('Authorization')
 
-
+    console.log(req.body)
     // If token doesn't exist, give access denied
     if (!token) return res.status(401).send('Access Denied');
 
     try {
         const userInformation = await axios({
-            method: 'get',
+            method: 'post',
             url: process.env.AUTHENTICATORURL + "/api/meta-data",
             headers: {
                 'Authorization': token
             }
         })
+        console.log("User Information")
 
 
 
@@ -159,7 +160,7 @@ async function auth(req, res, next) {
 
     } catch (err) {
         console.log(err)
-        res.status(400).send(err)
+        res.status(400).send(err.response.data)
     }
 }
 module.exports = auth;

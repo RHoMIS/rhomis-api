@@ -171,7 +171,7 @@ if (opt$status == "finalized") {
 
 print(draft)
 
-if (opt$commandType == "process") {
+if (opt$commandType == "prices") {
   processData(
     extractUnitsOnly = F, # The stage of data processing
     calculateInitialIndicatorsOnly = T, # The stage of data processing
@@ -187,9 +187,16 @@ if (opt$commandType == "process") {
     project_name = opt$projectName,
     form_name = opt$formName,
     form_version = opt$formVersion,
-    draft = draft,
+    isDraft = draft,
     database = opt$dataBase,
   )
+  }
+
+  if (opt$commandType == "indicators") {
+  
+  
+
+
 
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
@@ -208,7 +215,7 @@ if (opt$commandType == "process") {
     project_name = opt$projectName,
     form_name = opt$formName,
     form_version = opt$formVersion,
-    draft = draft,
+    isDraft = draft,
     database = opt$dataBase,
   )
 }
@@ -228,7 +235,7 @@ if (opt$commandType == "units") {
     project_name = opt$projectName,
     form_name = opt$formName,
     form_version = opt$formVersion,
-    draft = draft,
+    isDraft = draft,
     database = opt$dataBase,
   )
 }
@@ -243,6 +250,6 @@ if (opt$commandType == "generate") {
     form_name = opt$formName,
     form_version = opt$formVersion,
     number_of_responses = opt$numberOfResponses,
-    draft = draft
+    isDraft = draft
   )
 }
