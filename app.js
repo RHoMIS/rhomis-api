@@ -57,13 +57,14 @@ const metaDataRoute = require("./routes/metaData")
 const processDataRoute = require("./routes/processData")
 const deleteProjectRoute = require("./routes/deleteProject")
 const projectDataRoute = require("./routes/projectData")
-
+const unitsAndConversionsRoute = require("./routes/unitsAndConversions")
 
 app.use("/api/data/", dataRoute)
 app.use("/api/meta-data", metaDataRoute)
 app.use("/api/process-data", processDataRoute)
 app.use("/api/delete-project", deleteProjectRoute)
 app.use("/api/project-data", projectDataRoute)
+app.use("/api/conversions", unitsAndConversionsRoute)
 
 // Defining a get request for the home page
 app.get('/', (req, res) => {

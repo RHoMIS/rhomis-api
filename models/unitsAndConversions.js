@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 //Define a schema
 var Schema = mongoose.Schema;
 
-var unitsSchema = new Schema({
+var UnitsSchema = new Schema({
     dataType: String,
     formID: String,
     projectID: String,
@@ -11,4 +11,4 @@ var unitsSchema = new Schema({
 },
     { collection: 'units_and_conversions' });
 
-module.exports = mongoose.model('units_and_conversions', unitsSchema);
+module.exports = mongoose.model('units_and_conversions', UnitsSchema);
