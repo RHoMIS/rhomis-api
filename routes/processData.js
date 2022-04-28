@@ -98,19 +98,19 @@ router.post("/", auth, async (req, res) => {
         console.log(exec_string)
         await exec(exec_string, (error, stdout, stderr) => {
             if (stderr) {
-                res.send(`stderr: ${stderr}`)
+                res.status(400).send(`stderr: ${stderr}`)
                 console.log(stderr)
                 return
             }
             if (error) {
-                res.send(`error: ${error.message}`)
+                res.status(400).send(`error: ${error.message}`)
                 return
             }
 
             console.log("finished")
             console.log(stdout)
 
-            res.send(`stdout: ${stdout}`)
+            res.status(200).send(`stdout: ${stdout}`)
 
         })
 

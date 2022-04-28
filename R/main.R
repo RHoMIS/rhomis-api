@@ -35,7 +35,7 @@
 
 # Checking if R running from GUI
 if (interactive()) {
-  renv::load()
+  #renv::load()
   # Loading environment variables
 
   # Setting options for script run interactively.
@@ -149,7 +149,7 @@ if (!interactive()) {
 ####################################################################################################################
 library(rhomis, warn.conflicts = F)
 print(getwd())
-print(opt)
+#print(opt)
 # Getting the necessary functions
 # source("./R/testRun.R")
 
@@ -172,7 +172,13 @@ if (opt$status == "finalized") {
 print(draft)
 
 if (opt$commandType == "prices") {
-  processData(
+
+  tryCatch( 
+
+  # There should be an intermediate stage here where the prices
+  # Are verified, but for demo purposes skipping.
+    {
+    invisible(processData(
     extractUnitsOnly = F, # The stage of data processing
     calculateInitialIndicatorsOnly = T, # The stage of data processing
 
@@ -188,68 +194,113 @@ if (opt$commandType == "prices") {
     form_name = opt$formName,
     form_version = opt$formVersion,
     isDraft = draft,
-    database = opt$dataBase,
+    database = opt$dataBase
+  ))
+        write("success", stdout())
+
+    },error=function(cond){
+        write("failure", stdout())
+    }
+    
   )
+
+
+  
   }
 
   if (opt$commandType == "indicators") {
   
-  
 
-
+   tryCatch( 
 
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
-  processData(
-    extractUnitsOnly = F, # The stage of data processing
-    calculateFinalIndicatorsOnly = T, # The stage of data processing
+    {
+      invisible(processData(
+        extractUnitsOnly = F, # The stage of data processing
+        calculateFinalIndicatorsOnly = T, # The stage of data processing
 
-    # Arguments to indicate the type of processing being done (local or on server)
-    dataSource = "central",
-    outputType = "mongodb",
+        # Arguments to indicate the type of processing being done (local or on server)
+        dataSource = "central",
+        outputType = "mongodb",
 
-    # Arguments used for processing local data sets
-    central_url = opt$centralURL,
-    central_email = opt$centralEmail,
-    central_password = opt$centralPassword,
-    project_name = opt$projectName,
-    form_name = opt$formName,
-    form_version = opt$formVersion,
-    isDraft = draft,
-    database = opt$dataBase,
+        # Arguments used for processing local data sets
+        central_url = opt$centralURL,
+        central_email = opt$centralEmail,
+        central_password = opt$centralPassword,
+        project_name = opt$projectName,
+        form_name = opt$formName,
+        form_version = opt$formVersion,
+        isDraft = draft,
+        database = opt$dataBase))
+        write("success", stdout())
+
+    },error=function(cond){
+        write("failure", stdout())
+    }
+    
   )
+
+
+  
 }
 
 if (opt$commandType == "units") {
-  processData(
-    extractUnitsOnly = T, # The stage of data processing
+  tryCatch( 
 
-    # Arguments to indicate the type of processing being done (local or on server)
-    dataSource = "central",
-    outputType = "mongodb",
+  # There should be an intermediate stage here where the prices
+  # Are verified, but for demo purposes skipping.
+    {
+      invisible(processData(
+        extractUnitsOnly = T, # The stage of data processing
 
-    # Arguments used for processing local data sets
-    central_url = opt$centralURL,
-    central_email = opt$centralEmail,
-    central_password = opt$centralPassword,
-    project_name = opt$projectName,
-    form_name = opt$formName,
-    form_version = opt$formVersion,
-    isDraft = draft,
-    database = opt$dataBase,
+        # Arguments to indicate the type of processing being done (local or on server)
+        dataSource = "central",
+        outputType = "mongodb",
+
+        # Arguments used for processing local data sets
+        central_url = opt$centralURL,
+        central_email = opt$centralEmail,
+        central_password = opt$centralPassword,
+        project_name = opt$projectName,
+        form_name = opt$formName,
+        form_version = opt$formVersion,
+        isDraft = draft,
+        database = opt$dataBase))
+        write("success", stdout())
+
+    },error=function(err){
+        print(err)
+        write("failure", stdout())
+    }
+    
   )
 }
 
 
 if (opt$commandType == "generate") {
-  generateData(
-    central_url = opt$centralURL,
-    central_email = opt$centralEmail,
-    central_password = opt$centralPassword,
-    project_name = opt$projectName,
-    form_name = opt$formName,
-    form_version = opt$formVersion,
-    number_of_responses = opt$numberOfResponses,
-    isDraft = draft
+
+   tryCatch( 
+
+  # There should be an intermediate stage here where the prices
+  # Are verified, but for demo purposes skipping.
+    {
+      invisible(generateData(
+        central_url = opt$centralURL,
+        central_email = opt$centralEmail,
+        central_password = opt$centralPassword,
+        project_name = opt$projectName,
+        form_name = opt$formName,
+        form_version = opt$formVersion,
+        number_of_responses = opt$numberOfResponses,
+        isDraft = draft
+      ))
+        write("success", stdout())
+
+    },error=function(cond){
+        write("failure", stdout())
+    }
+    
   )
+  
 }
