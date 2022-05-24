@@ -32,7 +32,13 @@ const formSchema = new mongoose.Schema({
     processed: {
         type: Boolean,
         default: false
+    },
+    centralForm: {
+        type: Boolean,
+        default:true,
+        required:true
     }
+
 })
 
 module.exports = mongoose.model('Form', formSchema)

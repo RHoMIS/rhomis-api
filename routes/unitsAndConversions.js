@@ -22,7 +22,6 @@ router.post('/',auth,async (req,res)=>{
     const date = new Date()
 
     try{
-
         let oldUnits = await UnitsAndConversions.findOne({
             conversionType: req.body.unitType,
             projectID: req.body.projectSelected,

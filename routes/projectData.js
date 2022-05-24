@@ -8,6 +8,11 @@ router.options("*", cors());
 const auth = require('../validation/checkAccess')
 
 const projectData = require('../models/projectData')
+const Form = require('../models/forms')
+const Project = require('../models/projects')
+
+const units_and_conversions = require("../models/unitsAndConversions")
+const units_and_conversions_log = require("../models/unitsAndConversionsLog")
 
 const data = require("../models/data");
 
@@ -17,8 +22,6 @@ const authURL = config.get('authURL')
 const axios = require('axios')
 
 const getSubmissionCounts = require("./centralAuth")
-
-
 
 router.post("/", auth, async (req, res) => {
 
@@ -46,14 +49,7 @@ router.post("/", auth, async (req, res) => {
         var projectInfo = await projectData.findOne({ "formID": req.body.formName, "projectID": req.body.projectName })
         console.log("projectInfo")
 
-        // var submission_counts = await getSubmissionCounts({
-        //     "projectName": req.body.projectName,
-        //     "formName": req.body.formName
-        // })
-
-
         var response = JSON.parse(JSON.stringify(projectInfo))
-        // response.submissions = submission_counts;
         console.log(response)
 
         if (!response) return res.status(400).send("No project with those details found")
@@ -62,6 +58,64 @@ router.post("/", auth, async (req, res) => {
     } catch (err) {
         return res.status(400).send(err)
     }
+})
+
+
+// Create a project from data submitted through api.
+router.post("/create-external", auth, async (req,res) =>{
+
+    const form = await Form.findOne({
+        name: req.name,
+        project: req.name
+    })
+
+    const project = await Project.findOne({
+        name: req.name
+    })
+
+    if (!project){
+         res.status(400).send("Project not found in database")
+         return
+    }
+
+    if (!form){
+        res.status(400).send("Form not found in database")
+    }
+
+    try{
+
+        if (req.body.updateType=="dataSet"){
+            const updatedData = await data.updateOne(
+                {},
+                {}
+            )
+            const updatedProjectData = await projectData.updateOne(
+                {},
+                {}
+            )
+        }
+        if (req.body.updateType=="units"){
+
+            const updatedData = await data.updateOne(
+                {},
+                {}
+            )
+            const updatedProjectData = await projectData.updateOne(
+                {},
+                {}
+            )
+
+        }
+
+
+
+    }catch(err){
+        res.status(400).send(err)
+        return
+    }
+
+
+    
 })
 
 module.exports = router;

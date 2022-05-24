@@ -19,6 +19,12 @@ const projectSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    
+    centralProject:{
+        type: Boolean,
+        default:true,
+        required:true
     }
 })
 

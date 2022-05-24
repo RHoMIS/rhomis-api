@@ -5,9 +5,6 @@ const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
 
-
-
-
 const auth = require('../validation/checkAccess')
 
 const data = require("../models/data");
@@ -72,18 +69,9 @@ router.post("/", auth, async (req, res) => {
             throw "Unauthorized";
         }
 
-
-        //console.log(result)
     } catch (err) {
         res.json({ message: err });
     }
 });
-
-
-
-router.post("/update-units", auth, async (req, res) => {
-
-
-})
 
 module.exports = router;

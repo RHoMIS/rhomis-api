@@ -81,25 +81,6 @@ async function SyncWithAuthenticator(props) {
 
 
 
-
-        // const savedProject = await new Project(req.body).save()
-
-        // const oldForm = await Form.findOne({ name: req.body.name })
-        // if (oldForm) {
-        //     const updated_project = await Form.updateOne(
-        //         { name: req.body.name },
-        //         { formVersion: req.body.formVersion });
-
-        // }
-
-        // if (!oldForm) {
-        //     const savedForm = await new Form(req.body).save()
-
-        //     const updated_project = await Project.updateOne(
-        //         { name: req.body.project },
-        //         { $push: { forms: req.body.name } });
-        // }
-
         return (true)
 
     } catch (err) {
