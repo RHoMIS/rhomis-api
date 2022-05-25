@@ -43,6 +43,7 @@ router.post("/", auth, async (req, res) => {
                         formID: req.body.formID,
                         conversionType: req.body.dataType
                     })
+                    result=result[0].data
 
 
                 }
@@ -53,16 +54,25 @@ router.post("/", auth, async (req, res) => {
                         projectID: req.body.projectID,
                         formID: req.body.formID,
                         dataType: req.body.dataType
+                    },{
+                        "_id":0,
+                        "projectID":0,
+                        "formID":0,
+                        "dataType":0
+                    })
+                    
+                    result = result.map((row)=>{
+                        return row.data
                     })
                 }
 
 
                 console.log(result)
-                if (result.length > 1) {
-                    throw "More than one project with form and project ID. Duplicate projects in DB"
-                }
-
-                return res.send(result[0].data)
+                // if (result.length > 1) {
+                //     throw "More than one project with form and project ID. Duplicate projects in DB"
+                // }
+                console.log(result)
+                return res.status(200).send(result)
 
             }
 

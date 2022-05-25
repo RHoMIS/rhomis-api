@@ -46,8 +46,8 @@ router.post('/',auth,async (req,res)=>{
             }
         })
 
-
-        console.log(updatedUnits)
+         console.log(req.body)
+        // console.log(updatedUnits)
 
         return res.status(200).send("Units updated")
 
