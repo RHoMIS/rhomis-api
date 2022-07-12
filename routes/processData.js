@@ -58,6 +58,7 @@ router.post("/", auth, async (req, res) => {
         let status = undefined
         if (req.body.draft === true) {
             status = "draft"
+            return res.status(400).send("Only process data for live forms")
         }
 
         if (req.body.draft === false) {

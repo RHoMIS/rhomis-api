@@ -16,10 +16,18 @@ const formSchema = new mongoose.Schema({
     centralID: {
         type: String,
     },
-    formVersion: {
+    draftVersion: {
         type: String,
+        default: null
+    },
+    liveVersion: {
+        type: String,
+        default: null
     },
     draft: {
+        type: Boolean,
+    },
+    live: {
         type: Boolean,
     },
     complete: {
