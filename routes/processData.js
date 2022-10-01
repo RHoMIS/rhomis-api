@@ -55,15 +55,8 @@ router.post("/", auth, async (req, res) => {
         // if (!form) return res.status(400).send("Could not find the form you were looking for")
         // 
         console.log(" Checking whether it is a draft")
-        let status = undefined
-        if (req.body.draft === true) {
-            status = "draft"
-            return res.status(400).send("Only process data for live forms")
-        }
-
-        if (req.body.draft === false) {
-            status = "finalized"
-        }
+        let status = "finalized"
+    
 
 
         let exec_string = 'Rscript ' +
