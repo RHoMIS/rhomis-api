@@ -171,6 +171,37 @@ if (opt$status == "finalized") {
 
 print(draft)
 
+if (opt$commandType == "units") {
+  tryCatch( 
+
+  # There should be an intermediate stage here where the prices
+  # Are verified, but for demo purposes skipping.
+    {
+      invisible(
+        
+
+        extract_units_and_conversions_server(
+                central_url = opt$centralURL,
+                central_email = opt$centralEmail,
+                central_password = opt$centralPassword,
+                project_name = opt$projectName,
+                form_name = opt$formName,
+                database = opt$dataBase,
+                isDraft = draft
+            ))
+
+        write("success", stdout())
+
+    },error=function(err){
+        print(err)
+        write("failure", stdout())
+    }
+    
+  )
+
+}
+
+
 if (opt$commandType == "prices") {
 
   tryCatch( 
@@ -178,24 +209,17 @@ if (opt$commandType == "prices") {
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
     {
-    invisible(processData(
-    extractUnitsOnly = F, # The stage of data processing
-    calculateInitialIndicatorsOnly = T, # The stage of data processing
-
-    # Arguments to indicate the type of processing being done (local or on server)
-    dataSource = "central",
-    outputType = "mongodb",
-
-    # Arguments used for processing local data sets
-    central_url = opt$centralURL,
-    central_email = opt$centralEmail,
-    central_password = opt$centralPassword,
-    project_name = opt$projectName,
-    form_name = opt$formName,
-    form_version = opt$formVersion,
-    isDraft = draft,
-    database = opt$dataBase
-  ))
+    invisible(
+    calculate_prices_server(
+                central_url = opt$centralURL,
+                central_email = opt$centralEmail,
+                central_password = opt$centralPassword,
+                project_name = opt$projectName,
+                form_name = opt$formName,
+                database = opt$dataBase,
+                isDraft = draft
+            )
+  )
         write("success", stdout())
 
     },error=function(cond){
@@ -208,74 +232,37 @@ if (opt$commandType == "prices") {
   
   }
 
-  if (opt$commandType == "indicators") {
   
 
-   tryCatch( 
+  
 
+
+
+if (opt$commandType == "indicators") {
+   tryCatch( 
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
     {
-      invisible(processData(
-        extractUnitsOnly = F, # The stage of data processing
-        calculateFinalIndicatorsOnly = T, # The stage of data processing
-
-        # Arguments to indicate the type of processing being done (local or on server)
-        dataSource = "central",
-        outputType = "mongodb",
-
-        # Arguments used for processing local data sets
-        central_url = opt$centralURL,
-        central_email = opt$centralEmail,
-        central_password = opt$centralPassword,
-        project_name = opt$projectName,
-        form_name = opt$formName,
-        form_version = opt$formVersion,
-        isDraft = draft,
-        database = opt$dataBase))
+      invisible(
+        calculate_indicators_server(
+                central_url = opt$centralURL,
+                central_email = opt$centralEmail,
+                central_password = opt$centralPassword,
+                project_name = opt$projectName,
+                form_name = opt$formName,
+                database = opt$dataBase,
+                isDraft = draft
+            ))
         write("success", stdout())
+      
 
     },error=function(cond){
         write("failure", stdout())
     }
     
   )
-
-
-  
 }
 
-if (opt$commandType == "units") {
-  tryCatch( 
-
-  # There should be an intermediate stage here where the prices
-  # Are verified, but for demo purposes skipping.
-    {
-      invisible(processData(
-        extractUnitsOnly = T, # The stage of data processing
-
-        # Arguments to indicate the type of processing being done (local or on server)
-        dataSource = "central",
-        outputType = "mongodb",
-
-        # Arguments used for processing local data sets
-        central_url = opt$centralURL,
-        central_email = opt$centralEmail,
-        central_password = opt$centralPassword,
-        project_name = opt$projectName,
-        form_name = opt$formName,
-        form_version = opt$formVersion,
-        isDraft = draft,
-        database = opt$dataBase))
-        write("success", stdout())
-
-    },error=function(err){
-        print(err)
-        write("failure", stdout())
-    }
-    
-  )
-}
 
 
 if (opt$commandType == "generate") {
@@ -291,7 +278,6 @@ if (opt$commandType == "generate") {
         central_password = opt$centralPassword,
         project_name = opt$projectName,
         form_name = opt$formName,
-        form_version = opt$formVersion,
         number_of_responses = opt$numberOfResponses,
         isDraft = draft
       ))
