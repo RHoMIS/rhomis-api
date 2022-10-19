@@ -254,7 +254,7 @@ if (opt$commandType == "indicators") {
                 isDraft = draft
             ))
         write("success", stdout())
-      
+   
 
     },error=function(cond){
         write("failure", stdout())
