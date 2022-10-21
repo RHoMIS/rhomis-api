@@ -950,8 +950,8 @@
       "RemoteRepo": "rhomis-R-package",
       "RemoteUsername": "RHoMIS",
       "RemoteRef": "HEAD",
-      "RemoteSha": "44e19997ec31875ba4beeea0e7575e22a34fb0c2",
-      "Hash": "84c9b320199c6c50b1a91e2036a48d91",
+      "RemoteSha": "440bff2906b54d1bcc4211688a0c97eb6c6e13d2",
+      "Hash": "1bf496bfc3b1dc3a68e1a3564033a5ed",
       "Requirements": [
         "devtools",
         "digest",

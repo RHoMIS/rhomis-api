@@ -13,6 +13,11 @@ var projectDataSchema = new Schema({
     pricesCalculated: {type:Boolean, default: false},
     pricesConfirmed: {type:Boolean, default: false},
     finalIndicators: {type: Boolean, default: false},
+    time_updated:{type:Object, default: {
+        unitsExtracted: null,
+        pricesCalculated: null,
+        finalIndicators: null
+    }},
     zip_file_path: String
 },
     { collection: 'projectData' });
