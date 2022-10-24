@@ -13,6 +13,10 @@ const Form = require('../models/forms')
 const UnitsAndConversions = require("../models/unitsAndConversions")
 const UnitsAndConversionsLog = require("../models/unitsAndConversionsLog")
 
+const log = require('../validation/log');
+const Log = require('../models/Log')
+
+
 let config = require('config'); //we load the db location from the JSON files
 const dbName = config.get('dbConfig.name')
 
