@@ -21,7 +21,6 @@ const Log = require('../models/Log')
 
 router.post("/", auth, async (req, res) => {
   try {
-    console.log(req.body);
     if (
       (req.body.dataType !== undefined) &
       (req.body.projectID !== undefined) &
@@ -34,18 +33,15 @@ router.post("/", auth, async (req, res) => {
       // Data analyst can only access certain forms within a project
       const projectManagerIDs = req.user.information.user.roles.projectManager;
       const dataAnalystIDs = req.user.information.user.roles.analyst;
-      console.log(projectManagerIDs);
-      console.log(dataAnalystIDs);
+
 
       if (
         projectManagerIDs.includes(req.body.projectID) ||
         dataAnalystIDs.includes(req.body.formID)
       ) {
-        console.log("Getting data");
 
         let result = [];
 
-        console.log(req.body.unit);
         if (req.body.unit === true) {
           result = await units_and_conversions.find({
             projectID: req.body.projectID,
@@ -75,11 +71,6 @@ router.post("/", auth, async (req, res) => {
           });
         }
 
-        console.log(result);
-        // if (result.length > 1) {
-        //     throw "More than one project with form and project ID. Duplicate projects in DB"
-        // }
-        console.log(result);
         return res.status(200).send(result);
       }
 
@@ -108,23 +99,18 @@ router.post("/all-data", auth, async (req, res) => {
 
   const projectManagerIDs = req.user.information.user.roles.projectManager;
   const dataAnalystIDs = req.user.information.user.roles.analyst;
-  console.log(projectManagerIDs)
-  console.log(req.body.projectID)
+
 
   if (
     projectManagerIDs.includes(req.body.projectID) ||
     dataAnalystIDs.includes(req.body.formID)
   ) {
-    console.log("Getting data");
-
-    // const file = await readFile("~/rhomis_datasets/project_8th_aug_2022/project_8th_aug_2022_test_form_1_8th_aug.zip")
     const home_dir = os.homedir();
 
     const dataset = await projectData.findOne({
         projectID: req.body.projectID,
         formID: req.body.formID
     })
-    console.log(dataset)
 
     if (!dataset){
         res.status(400).send("Unable to find data associated with project")
@@ -135,9 +121,6 @@ router.post("/all-data", auth, async (req, res) => {
         res.status(400).send("Unable to find data associated with project")
         return
     }
-
-
-
 
     let absolute_path =
     dataset.zip_file_path.replace(

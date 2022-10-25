@@ -8,12 +8,14 @@ var projectDataSchema = new Schema({
     dataSets: Object,
     units: Object,
     // centralProject: {type:Boolean, default: true, required:true},
+    rawDataExtracted: {type:Boolean, default: false},
     unitsExtracted: {type:Boolean, default: false},
     unitsConfirmed: {type:Boolean, default: false},
     pricesCalculated: {type:Boolean, default: false},
     pricesConfirmed: {type:Boolean, default: false},
     finalIndicators: {type: Boolean, default: false},
     time_updated:{type:Object, default: {
+        rawDataExtracted: null,
         unitsExtracted: null,
         pricesCalculated: null,
         finalIndicators: null

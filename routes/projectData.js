@@ -29,9 +29,7 @@ const Log = require('../models/Log')
 
 router.post("/", auth, async (req, res) => {
 
-    console.log("Reached project Data endpoint")
-    // res.send(req.user.information)
-
+   
 
 
 
@@ -51,10 +49,8 @@ router.post("/", auth, async (req, res) => {
     try {
 
         var projectInfo = await projectData.findOne({ "formID": req.body.formName, "projectID": req.body.projectName })
-        console.log("projectInfo")
 
         var response = JSON.parse(JSON.stringify(projectInfo))
-        console.log(response)
 
         if (!response) return res.status(400).send("No project with those details found")
         return res.status(200).send(response)

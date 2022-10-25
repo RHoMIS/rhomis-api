@@ -27,41 +27,25 @@ const central_password = process.env.CENTRALPASSWORD;
 router.post("/", auth, async (req, res) => {
     try {
 
-        console.log("Reached the processing endpoint")
 
         if (!req.body.projectName) {
-            res.send("Please send a project name for the data you would like to process")
+            res.send("No project name provided")
             return
         }
 
         if (!req.body.formName) {
-            res.send("Please send a form name for the data you would like to process")
+            res.send("No form name provided")
             return
         }
 
 
         // Check User has access
-
         const projectManagerIDs = req.user.information.user.roles.projectManager
         if (projectManagerIDs.includes(req.body.projectName) === false) {
             return res.status(400).send("Unauthorized")
         }
 
-
-        console.log("Checking form exists")
-
-        console.log(req.body)
-        // const form = await Form.findOne({
-        //     name: req.body.formName,
-        //     project: req.body.projectName
-        // })
-
-        // if (!form) return res.status(400).send("Could not find the form you were looking for")
-        // 
-        console.log(" Checking whether it is a draft")
         let status = "finalized"
-    
-
 
         let exec_string = 'Rscript ' +
             rscriptPath +
@@ -95,26 +79,27 @@ router.post("/", auth, async (req, res) => {
 
         console.log(exec_string)
         await exec(exec_string, (error, stdout, stderr) => {
-            if (stderr) {
-                res.status(400).send(`stderr: ${stderr}`)
-                console.log(stderr)
-                return
-            }
-            if (error) {
-                res.status(400).send(`error: ${error.message}`)
-                return
-            }
-
-            console.log("finished")
+            console.log("stderr")
+            console.log(stderr)
+            
+            console.log("stdout")
             console.log(stdout)
 
-            res.status(200).send(`stdout: ${stdout}`)
+            console.log("error")
+            console.log(error)
+        
+            if (error) {
+                res.status(400).send(`Failed to process data: ${stdout}`)
+                return
+            }
+
+            res.status(200).send(`Successfully Processed data: ${stdout}`)
 
         })
 
         //res.send("Data processed")
     } catch (err) {
-        res.json({ message: err });
+        res.status(400).send(error);
     }
 
 })

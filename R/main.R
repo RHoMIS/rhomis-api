@@ -34,25 +34,25 @@
 # Setup for interactive script running  -------------------------------------------------------------------
 
 # Checking if R running from GUI
-if (interactive()) {
-  #renv::load()
-  # Loading environment variables
-
-  # Setting options for script run interactively.
-  # These should be set manually if you are running the script interactively
-
-  opt <- list()
-  opt$status <- "draft"
-  opt$commandType <- "units"
-  opt$projectName <- "example project name"
-  opt$formName <- "example form name"
-  opt$dataBase <- "rhomis-data-dev"
-  opt$formVersion <- "version_xyz"
-  opt$numberOfResponses <- FALSE
-  opt$centralURL <- "example_url"
-  opt$centralEmail <- "example_email"
-  opt$centralPassword <- "example_pass"
-}
+# if (interactive()) {
+#   #renv::load()
+#   # Loading environment variables
+#
+#   # Setting options for script run interactively.
+#   # These should be set manually if you are running the script interactively
+#
+#   opt <- list()
+#   opt$status <- "finalized"
+#   opt$commandType <- "prices"
+#   opt$projectName <- "second project 20th april"
+#   opt$formName <- "test-form-1"
+#   opt$dataBase <- "rhomis-data-dev"
+#   opt$formVersion <- "version-xyz"
+#   opt$numberOfResponses <- FALSE
+#   opt$centralURL <- "https://central.rhomis.cgiar.org"
+#   opt$centralEmail <- rstudioapi::askForPassword("User Email")
+#   opt$centralPassword <- rstudioapi::askForPassword("User Password")
+# }
 
 # Setup for running from command line -------------------------------------
 # Checking if script has been run from the command line
@@ -148,7 +148,6 @@ if (!interactive()) {
 ####################################################################################################################
 ####################################################################################################################
 library(rhomis, warn.conflicts = F)
-print(getwd())
 #print(opt)
 # Getting the necessary functions
 # source("./R/testRun.R")
@@ -169,16 +168,46 @@ if (opt$status == "finalized") {
   draft <- F
 }
 
-print(draft)
 
-if (opt$commandType == "units") {
-  tryCatch( 
+if (opt$commandType == "raw-data") {
+  tryCatch(
 
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
     {
       invisible(
-        
+
+
+        extract_raw_data_server(
+                central_url = opt$centralURL,
+                central_email = opt$centralEmail,
+                central_password = opt$centralPassword,
+                project_name = opt$projectName,
+                form_name = opt$formName,
+                database = opt$dataBase,
+                isDraft = draft
+            ))
+
+        write(warnings(), stdout())
+
+    },error=function(err){
+        print(err)
+        write("failure", stdout())
+    }
+
+  )
+
+}
+
+
+if (opt$commandType == "units") {
+  tryCatch(
+
+  # There should be an intermediate stage here where the prices
+  # Are verified, but for demo purposes skipping.
+    {
+      invisible(
+
 
         extract_units_and_conversions_server(
                 central_url = opt$centralURL,
@@ -190,13 +219,13 @@ if (opt$commandType == "units") {
                 isDraft = draft
             ))
 
-        write("success", stdout())
+        write(warnings(), stdout())
 
     },error=function(err){
         print(err)
         write("failure", stdout())
     }
-    
+
   )
 
 }
@@ -204,11 +233,13 @@ if (opt$commandType == "units") {
 
 if (opt$commandType == "prices") {
 
-  tryCatch( 
+  tryCatch(
 
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
     {
+
+
     invisible(
     calculate_prices_server(
                 central_url = opt$centralURL,
@@ -220,26 +251,28 @@ if (opt$commandType == "prices") {
                 isDraft = draft
             )
   )
-        write("success", stdout())
+  write(warnings(), stdout())
 
     },error=function(cond){
-        write("failure", stdout())
+
+        write("failure:<br/>", stderr())
+        stop(cond)
     }
-    
+
   )
 
 
-  
+
   }
 
-  
 
-  
+
+
 
 
 
 if (opt$commandType == "indicators") {
-   tryCatch( 
+   tryCatch(
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
     {
@@ -253,13 +286,13 @@ if (opt$commandType == "indicators") {
                 database = opt$dataBase,
                 isDraft = draft
             ))
-        write("success", stdout())
-   
+        # write("success", stdout())
+
 
     },error=function(cond){
         write("failure", stdout())
     }
-    
+
   )
 }
 
@@ -267,7 +300,7 @@ if (opt$commandType == "indicators") {
 
 if (opt$commandType == "generate") {
 
-   tryCatch( 
+   tryCatch(
 
   # There should be an intermediate stage here where the prices
   # Are verified, but for demo purposes skipping.
@@ -286,7 +319,7 @@ if (opt$commandType == "generate") {
     },error=function(cond){
         write("failure", stdout())
     }
-    
+
   )
-  
+
 }
