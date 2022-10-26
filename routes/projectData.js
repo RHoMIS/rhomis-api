@@ -56,6 +56,18 @@ router.post("/", auth, async (req, res) => {
         return res.status(200).send(response)
 
     } catch (err) {
+        log({
+            file: './routes/processData.js',
+            line: '50',
+            info: {
+                message:'Error trying to find project details',
+                data:{
+                    user_id: req.user._id,
+                    error: err
+                }
+            },
+            type: 'message'
+        }, Log)
         return res.status(400).send(err)
     }
 })

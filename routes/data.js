@@ -73,6 +73,17 @@ router.post("/", auth, async (req, res) => {
 
         return res.status(200).send(result);
       }
+      log({
+        file: './routes/data.js',
+        line: '78',
+        info: {
+            message:'Unauthorized',
+            data:{
+                user_id: req.user._id
+            }
+        },
+        type: 'message'
+    }, Log)
 
       throw "Unauthorized";
     }
@@ -82,6 +93,17 @@ router.post("/", auth, async (req, res) => {
 });
 
 router.post("/all-data", auth, async (req, res) => {
+  log({
+    file: './routes/data.js',
+    line: '96',
+    info: {
+        message:'Fetching all data',
+        data:{
+            user_id: req.user._id
+        }
+    },
+    type: 'message'
+}, Log)
   if (req.body.projectID === undefined) {
     res.status(400).send("Need to include project ID in request");
     return;
@@ -113,6 +135,7 @@ router.post("/all-data", auth, async (req, res) => {
     })
 
     if (!dataset){
+      
         res.status(400).send("Unable to find data associated with project")
         return
     }
@@ -135,7 +158,7 @@ router.post("/all-data", auth, async (req, res) => {
 
     return;
   }
-
+  
   return res.status(400).send("Unauthorized");
 });
 

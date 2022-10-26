@@ -57,6 +57,18 @@ router.post('/',auth,async (req,res)=>{
 
     }catch(err){
         console.log(err)
+        log({
+            file: './routes/processData.js',
+            line: '50',
+            info: {
+                message:'Error adding units and conversions',
+                data:{
+                    user_id: req.user._id,
+                    error: err
+                }
+            },
+            type: 'message'
+        }, Log)
         return res.status(400).send(err)
     }
 

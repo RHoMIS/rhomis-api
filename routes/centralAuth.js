@@ -8,6 +8,14 @@ const Log = require('../models/Log')
 
 
 async function getCentralAuthToken() {
+    log({
+        file: './routes/centralAuth.js',
+        line: '11',
+        info: {
+            message:'Getting central token'
+        },
+        type: 'message'
+    }, Log)
     try {
 
         const central_token = await axios({
@@ -24,6 +32,16 @@ async function getCentralAuthToken() {
 
         return central_token.data.token
     } catch (err) {
+
+        log({
+            file: './routes/centralAuth.js',
+            line: '11',
+            info: {
+                message:'Failed to get ODK central token',
+                error: err
+            },
+            type: 'message'
+        }, Log)
         return "Could not obtain central token, err:" + err
     }
 }
@@ -51,6 +69,16 @@ async function getSubmissionCounts(props) {
         },
     })
         .catch(function (error) {
+            log({
+                file: './routes/centralAuth.js',
+                line: '72',
+                info: {
+                    message:'Failed to get ODK submission counts',
+                    error: error
+                },
+                type: 'message'
+            }, Log)
+            
             console.log(error)
             throw error
         })

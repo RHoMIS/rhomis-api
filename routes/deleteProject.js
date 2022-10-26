@@ -40,6 +40,18 @@ router.delete("/", auth, async (req, res) => {
         }
         throw "Unauthorized"
     } catch (err) {
+        log({
+            file: './routes/deleteProject.js',
+            line: '44',
+            info: {
+                message:'Unable to delete project',
+                data:{
+                    user_id: req.user._id,
+                    error: err
+                }
+            },
+            type: 'message'
+        }, Log)
         res.json({ message: err });
     }
 

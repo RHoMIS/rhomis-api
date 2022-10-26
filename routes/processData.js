@@ -99,6 +99,18 @@ router.post("/", auth, async (req, res) => {
 
         //res.send("Data processed")
     } catch (err) {
+        log({
+            file: './routes/processData.js',
+            line: '50',
+            info: {
+                message:'Could not process dataset',
+                data:{
+                    user_id: req.user._id,
+                    error: err
+                }
+            },
+            type: 'message'
+        }, Log)
         res.status(400).send(error);
     }
 

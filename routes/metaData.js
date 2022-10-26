@@ -23,6 +23,18 @@ router.get("/", auth, async (req, res) => {
         res.send(result)
 
     } catch (err) {
+        log({
+            file: './routes/metaData.js',
+            line: '26',
+            info: {
+                message:'Could not fetch project metadata',
+                data:{
+                    user_id: req.user._id,
+                    error: err
+                }
+            },
+            type: 'message'
+        }, Log)
         res.json({ message: err });
     }
 });
@@ -35,6 +47,18 @@ router.get("/form-data", auth, async (req, res) => {
         res.send(result)
 
     } catch (err) {
+        log({
+            file: './routes/metaData.js',
+            line: '50',
+            info: {
+                message:'Could not fetch form data',
+                data:{
+                    user_id: req.user._id,
+                    error: err
+                }
+            },
+            type: 'message'
+        }, Log)
         res.json({ message: err });
     }
 });
