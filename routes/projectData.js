@@ -14,6 +14,9 @@ const Project = require('../models/projects')
 const units_and_conversions = require("../models/unitsAndConversions")
 const units_and_conversions_log = require("../models/unitsAndConversionsLog")
 
+const log = require('../validation/log');
+const Log = require('../models/Log')
+
 const data = require("../models/data");
 
 let config = require('config'); //we load the db location from the JSON files

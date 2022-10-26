@@ -11,6 +11,9 @@ const data = require('../models/data')
 const Project = require('../models/projects')
 const Form = require('../models/forms')
 
+const log = require('../validation/log');
+const Log = require('../models/Log')
+
 router.delete("/", auth, async (req, res) => {
     try {
         console.log("Deleting project")
