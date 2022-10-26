@@ -8,6 +8,7 @@ const express = require('express')
 const app = express()
 //const port = process.env.PORT;
 
+const Log = require('./models/Log')
 
 // Configuration files s
 let config = require('config'); //we load the db location from the JSON files
@@ -71,8 +72,47 @@ app.get('/', (req, res) => {
     res.send('Welcome to the RHoMIS API application')
 })
 
+<<<<<<< HEAD
 
 
+=======
+app.get('/logs', async (req, res) => {
+
+    let header = `
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <pre id="json"></pre>
+
+    <script>
+    
+
+    
+    
+    var data =
+    `
+
+
+    let footer = `
+    document.getElementById("json").textContent = JSON.stringify(data, undefined, 2);
+
+  </script>
+
+</body>
+</html>
+    `
+
+    const logs = await Log.find({}).
+        sort('-time').
+        limit(11)
+    
+     let middle = JSON.stringify(logs) 
+
+     res.send(header+middle+footer)
+
+   
+})
+>>>>>>> staging
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

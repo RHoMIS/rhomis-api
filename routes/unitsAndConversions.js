@@ -8,6 +8,9 @@ const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
 
+const log = require('../validation/log');
+const Log = require('../models/Log')
+
 
 const Form = require('../models/forms')
 const UnitsAndConversions = require("../models/unitsAndConversions")

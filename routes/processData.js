@@ -4,6 +4,9 @@ const auth = require('../validation/checkAccess')
 const { exec } = require("child_process")
 
 
+const log = require('../validation/log');
+const Log = require('../models/Log')
+
 const cors = require("cors");
 router.use(cors());
 router.options("*", cors());
