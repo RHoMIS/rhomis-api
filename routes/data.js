@@ -18,9 +18,6 @@ const Log = require('../models/Log')
 
 const os = require("os");
 
-const log = require('../validation/log');
-const Log = require('../models/Log')
-
 
 router.post("/", auth, async (req, res) => {
   try {

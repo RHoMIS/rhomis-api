@@ -72,10 +72,6 @@ app.get('/', (req, res) => {
     res.send('Welcome to the RHoMIS API application')
 })
 
-<<<<<<< HEAD
-
-
-=======
 app.get('/logs', async (req, res) => {
 
     let header = `
@@ -112,7 +108,6 @@ app.get('/logs', async (req, res) => {
 
    
 })
->>>>>>> staging
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

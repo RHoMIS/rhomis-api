@@ -26,9 +26,6 @@ const axios = require('axios')
 
 const getSubmissionCounts = require("./centralAuth")
 
-const log = require('../validation/log');
-const Log = require('../models/Log')
-
 
 router.post("/", auth, async (req, res) => {
 
