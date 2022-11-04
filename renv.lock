@@ -19,6 +19,35 @@
         "lattice"
       ]
     },
+    "R.methodsS3": {
+      "Package": "R.methodsS3",
+      "Version": "1.8.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "278c286fd6e9e75d0c2e8f731ea445c8",
+      "Requirements": []
+    },
+    "R.oo": {
+      "Package": "R.oo",
+      "Version": "1.25.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a0900a114f4f0194cf4aa8cd4a700681",
+      "Requirements": [
+        "R.methodsS3"
+      ]
+    },
+    "R.utils": {
+      "Package": "R.utils",
+      "Version": "2.12.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1ed133420fcd2b93cf55a383b38fe27c",
+      "Requirements": [
+        "R.methodsS3",
+        "R.oo"
+      ]
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.1",
@@ -950,9 +979,10 @@
       "RemoteRepo": "rhomis-R-package",
       "RemoteUsername": "RHoMIS",
       "RemoteRef": "HEAD",
-      "RemoteSha": "11dd9b98797ed93fdf6c31fd3be856a170280b97",
-      "Hash": "8157fe187a4f7c51b934a77b0f1e5dad",
+      "RemoteSha": "1ff7a591b79aa87efef22eda01479e35394ae6f2",
+      "Hash": "38a9c37b2279ee596806f0007072e817",
       "Requirements": [
+        "R.utils",
         "devtools",
         "digest",
         "dplyr",
